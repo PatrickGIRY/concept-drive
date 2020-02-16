@@ -11,7 +11,8 @@ public class CreateConceptService {
         this.concepts = concepts;
     }
 
-    public void createConcept(ConceptName conceptName) {
+    public CreateConceptResponse createConcept(ConceptName conceptName) {
         concepts.append(Concept.named(conceptName));
+        return CreateConceptResponse.conceptCreated(conceptName);
     }
 }

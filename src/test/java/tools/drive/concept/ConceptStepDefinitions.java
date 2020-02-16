@@ -4,6 +4,7 @@ import io.cucumber.java8.En;
 import tools.drive.concept.domain.Concept;
 import tools.drive.concept.domain.ConceptName;
 import tools.drive.concept.domain.Concepts;
+import tools.drive.concept.services.CreateConceptResponse;
 import tools.drive.concept.services.CreateConceptService;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -11,6 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ConceptStepDefinitions implements En {
 
     private final CreateConceptService createConceptService;
+    private CreateConceptResponse createConceptResponse;
     private ConceptName conceptName;
     private boolean conceptAlreadyExists;
     private Concept conceptAppended;
@@ -30,20 +32,21 @@ public class ConceptStepDefinitions implements En {
             }
         });
 
-        Given("^a concept named (\\w+)", (String conceptName) -> {
-            this.conceptName = ConceptName.valueOf(conceptName);
-        });
-        Given("no concept exists with the same name", () -> {
-            this.conceptAlreadyExists = false;
-        });
+        Given("^a concept named (\\w+)", (String conceptName) ->
+                this.conceptName = ConceptName.valueOf(conceptName));
 
-        When("^the concept is created$", () -> {
-            this.createConceptService.createConcept(conceptName);
-        });
+        Given("no concept exists with the same name", () ->
+                this.conceptAlreadyExists = false);
 
-        Then("^a new concept named (\\w+) is appended to the concepts$", (String conceptName) -> {
-            assertThat(this.conceptAppended)
-                    .isEqualTo(Concept.named(ConceptName.valueOf(conceptName)));
-        });
+        When("^the concept is created$", () ->
+                this.createConceptResponse = this.createConceptService.createConcept(conceptName));
+
+        Then("^a new concept named (\\w+) is appended to the concepts$", (String conceptName) ->
+                assertThat(this.conceptAppended)
+                        .isEqualTo(Concept.named(ConceptName.valueOf(conceptName))));
+
+        Then("^a concept named (\\w+) is created should be returned$", (String conceptName) ->
+                assertThat(createConceptResponse)
+                        .isEqualTo(CreateConceptResponse.conceptCreated(ConceptName.valueOf(conceptName))));
     }
 }

@@ -5,3 +5,4 @@ Feature: Concept
     And no concept exists with the same name
     When the concept is created
     Then a new concept named Contact is appended to the concepts
+    And a concept named Contact is created should be returned
