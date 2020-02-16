@@ -11,6 +11,10 @@ public class CreateConceptResponse {
         return new CreateConceptResponse(conceptName);
     }
 
+    public static CreateConceptResponse conceptAlreadyExistsWithName(ConceptName conceptName) {
+        return new CreateConceptResponse(conceptName);
+    }
+
     private CreateConceptResponse(ConceptName conceptName) {
         this.conceptName = conceptName;
     }

@@ -12,7 +12,9 @@ public class CreateConceptService {
     }
 
     public CreateConceptResponse createConcept(ConceptName conceptName) {
-        concepts.append(Concept.named(conceptName));
+        if (!concepts.existsWithTheSameName(conceptName)) {
+            concepts.append(Concept.named(conceptName));
+        }
         return CreateConceptResponse.conceptCreated(conceptName);
     }
 }

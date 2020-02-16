@@ -38,6 +38,9 @@ public class ConceptStepDefinitions implements En {
         Given("no concept exists with the same name", () ->
                 this.conceptAlreadyExists = false);
 
+        Given("^a concept with the same name already exists$", () ->
+                this.conceptAlreadyExists = true);
+
         When("^the concept is created$", () ->
                 this.createConceptResponse = this.createConceptService.createConcept(conceptName));
 
@@ -45,8 +48,15 @@ public class ConceptStepDefinitions implements En {
                 assertThat(this.conceptAppended)
                         .isEqualTo(Concept.named(ConceptName.valueOf(conceptName))));
 
+        Then("^no new concept should be appended$", () ->
+                assertThat(this.conceptAppended).isNull());
+
         Then("^a concept named (\\w+) is created should be returned$", (String conceptName) ->
                 assertThat(createConceptResponse)
                         .isEqualTo(CreateConceptResponse.conceptCreated(ConceptName.valueOf(conceptName))));
+
+        Then("^a concept already exists with the name (\\w+) should be returned$", (String conceptName) ->
+                assertThat(createConceptResponse)
+                        .isEqualTo(CreateConceptResponse.conceptAlreadyExistsWithName(ConceptName.valueOf(conceptName))));
     }
 }
