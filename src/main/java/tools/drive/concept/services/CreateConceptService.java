@@ -14,7 +14,9 @@ public class CreateConceptService {
     public CreateConceptResponse createConcept(ConceptName conceptName) {
         if (!concepts.existsWithTheSameName(conceptName)) {
             concepts.append(Concept.named(conceptName));
+            return CreateConceptResponse.conceptCreated(conceptName);
+        } else {
+            return CreateConceptResponse.conceptAlreadyExistsWithName(conceptName);
         }
-        return CreateConceptResponse.conceptCreated(conceptName);
     }
 }
