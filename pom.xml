@@ -9,7 +9,7 @@
     <url>http://maven.apache.org</url>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.release.version>13</java.release.version>
+        <java.release.version>11</java.release.version>
         <maven.compiler.source>${java.release.version}</maven.compiler.source>
         <maven.compiler.target>${maven.compiler.source}</maven.compiler.target>
         <junit.jupiter.version>5.6.0</junit.jupiter.version>
